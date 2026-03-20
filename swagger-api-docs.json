@@ -1,0 +1,1276 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AI工作流接口文档",
+    "description": "AiFlowController 接口文档 - 包含智能体管理、工作流管理、节点操作等接口",
+    "version": "1.0.0",
+    "contact": {
+      "name": "开发团队"
+    }
+  },
+  "basePath": "/aiworkflow",
+  "tags": [
+    {
+      "name": "全局配置",
+      "description": "全局配置相关接口"
+    },
+    {
+      "name": "智能体管理",
+      "description": "智能体的增删改查操作"
+    },
+    {
+      "name": "工作流管理",
+      "description": "工作流的增删改查、状态管理"
+    },
+    {
+      "name": "节点操作",
+      "description": "节点的添加、修改、删除、条件设置"
+    }
+  ],
+  "paths": {
+    "/globalConfiguration": {
+      "post": {
+        "tags": ["全局配置"],
+        "summary": "获取全局配置信息",
+        "description": "获取AI工作流全局配置信息",
+        "operationId": "globalConfiguration",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/openOrCloseGlobalConfig": {
+      "post": {
+        "tags": ["全局配置"],
+        "summary": "开启/关闭全局配置",
+        "description": "开启或关闭AI工作流全局配置",
+        "operationId": "openOrCloseGlobalConfig",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "isOpen",
+            "in": "body",
+            "description": "是否开启 (0-关闭, 1-开启)",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/agent/list": {
+      "post": {
+        "tags": ["智能体管理"],
+        "summary": "智能体列表",
+        "description": "获取智能体列表，支持按名称搜索",
+        "operationId": "agentList",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "description": "智能体名称（模糊搜索）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/agent/create": {
+      "post": {
+        "tags": ["智能体管理"],
+        "summary": "智能体创建",
+        "description": "创建新的智能体",
+        "operationId": "agentCreate",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "description": "智能体名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/agent/rename": {
+      "post": {
+        "tags": ["智能体管理"],
+        "summary": "智能体重命名",
+        "description": "修改智能体名称",
+        "operationId": "agentRename",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "description": "新名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "agentId",
+            "in": "body",
+            "description": "智能体ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/agent/delete": {
+      "post": {
+        "tags": ["智能体管理"],
+        "summary": "删除智能体",
+        "description": "删除指定智能体",
+        "operationId": "agentDelete",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "body",
+            "description": "智能体ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/classifyTemplateHasData": {
+      "post": {
+        "tags": ["智能体管理"],
+        "summary": "查询智能体下是否有工作流",
+        "description": "检查智能体分类下是否存在工作流数据",
+        "operationId": "classifyTemplateHasData",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "description": "分类ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/createAiFlow": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "创建AI工作流",
+        "description": "创建新的AI工作流",
+        "operationId": "createAiFlow",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "workFlowInfo",
+            "description": "工作流信息",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AiWorkFlowInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/getProcessStatus": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "获取工作流当前状态",
+        "description": "获取指定工作流的当前运行状态",
+        "operationId": "getProcessStatus",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/openOrClose": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "开启/关闭工作流",
+        "description": "开启或关闭指定工作流",
+        "operationId": "openOrClose",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "isOpen",
+            "in": "body",
+            "description": "是否开启 (0-关闭, 1-开启)",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/queryAiWorkFlowList": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "营销活动列表多条件分页",
+        "description": "分页查询工作流列表，支持多条件筛选",
+        "operationId": "queryAiWorkFlowList",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "req",
+            "description": "查询条件",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AiWorkFlowListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/isTop": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "置顶",
+        "description": "设置工作流置顶/取消置顶",
+        "operationId": "isTop",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "in": "body",
+            "description": "类型 (0-取消置顶, 1-置顶)",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/editAiFlow": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "流程编辑",
+        "description": "编辑工作流信息",
+        "operationId": "editAiFlow",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "workFlowInfo",
+            "description": "工作流信息",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AiWorkFlowInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/deleteAiFlow": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "流程删除",
+        "description": "删除指定工作流",
+        "operationId": "deleteAiFlow",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/getAiWorkFlowDetail": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "流程查看详情",
+        "description": "获取工作流详细信息",
+        "operationId": "getAiWorkFlowDetail",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/getNodeCondition": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "查询节点条件",
+        "description": "获取节点的条件配置信息",
+        "operationId": "getNodeCondition",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "nodeConditionObtainReq",
+            "description": "节点条件查询请求",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AiNodeConditionObtainReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/nodeAdd": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "添加节点",
+        "description": "在工作流中添加新节点",
+        "operationId": "nodeAdd",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "nodeAddReq",
+            "in": "body",
+            "description": "节点添加请求列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AiNodeAddReq"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/nodeUpdate": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "修改节点",
+        "description": "拖动修改节点位置",
+        "operationId": "nodeUpdate",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "nodeUpdateReq",
+            "in": "body",
+            "description": "节点更新请求列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AiNodeUpdateReq"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/saveNodeCondition": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "设置节点条件",
+        "description": "保存节点的条件配置",
+        "operationId": "saveNodeCondition",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "nodeConditionSaveReq",
+            "description": "节点条件保存请求",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AiNodeConditionSaveReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/generateConditionalNode": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "条件判断节点-生成拆分后节点",
+        "description": "为条件判断节点生成拆分后的子节点",
+        "operationId": "generateConditionalNode",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "nodeId",
+            "in": "body",
+            "description": "节点ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "节点名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "processX",
+            "in": "body",
+            "description": "X坐标",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "processY",
+            "in": "body",
+            "description": "Y坐标",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "remark",
+            "in": "body",
+            "description": "备注",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "conditions",
+            "in": "body",
+            "description": "子节点名称列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/saveNodeRelation": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "保存节点关系",
+        "description": "保存节点之间的连接关系",
+        "operationId": "saveNodeRelation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "nodeRelationReq",
+            "in": "body",
+            "description": "节点关系请求列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AiNodeRelationNewReq"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/deleteNodeRelation": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "删除节点关系",
+        "description": "删除节点之间的连接关系",
+        "operationId": "deleteNodeRelation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "nodeRelationReq",
+            "in": "body",
+            "description": "节点关系请求列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AiNodeRelationNewReq"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/CopyAndPaste": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "复制粘贴节点",
+        "description": "复制并粘贴节点到工作流",
+        "operationId": "CopyAndPaste",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "nodeAddReq",
+            "in": "body",
+            "description": "节点添加请求列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          {
+            "name": "nodeRelationReq",
+            "in": "body",
+            "description": "节点关系请求列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/nodeDeleteBatch": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "批量删除节点",
+        "description": "批量删除工作流中的节点",
+        "operationId": "nodeDeleteBatch",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "body",
+            "description": "节点ID列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/getSellerFlag": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "获取插旗",
+        "description": "获取卖家插旗配置",
+        "operationId": "getSellerFlag",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/copyAiFlow": {
+      "post": {
+        "tags": ["工作流管理"],
+        "summary": "复制完整流程",
+        "description": "复制整个工作流",
+        "operationId": "copyAiFlow",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "req",
+            "description": "流程复制请求",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FlowCopyReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    },
+    "/validationResults": {
+      "post": {
+        "tags": ["节点操作"],
+        "summary": "模板编辑器-添加画像-校验接口",
+        "description": "校验添加画像条件的结果",
+        "operationId": "validationResults",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workFlowId",
+            "in": "body",
+            "description": "工作流ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "nodeId",
+            "in": "body",
+            "description": "节点ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "addHxCondition",
+            "in": "body",
+            "description": "添加画像条件列表",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ResponseResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ResponseResult": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "响应码"
+        },
+        "message": {
+          "type": "string",
+          "description": "响应消息"
+        },
+        "data": {
+          "type": "object",
+          "description": "响应数据"
+        }
+      }
+    },
+    "AiWorkFlowInfo": {
+      "type": "object",
+      "description": "工作流信息",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "工作流ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "工作流名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "工作流描述"
+        },
+        "status": {
+          "type": "integer",
+          "description": "状态"
+        },
+        "parentId": {
+          "type": "integer",
+          "description": "父级ID/分类ID"
+        },
+        "shopNick": {
+          "type": "string",
+          "description": "店铺昵称"
+        }
+      }
+    },
+    "AiWorkFlowListReq": {
+      "type": "object",
+      "description": "工作流列表查询请求",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "工作流名称"
+        },
+        "status": {
+          "type": "integer",
+          "description": "状态"
+        },
+        "parentId": {
+          "type": "integer",
+          "description": "分类ID"
+        },
+        "current": {
+          "type": "integer",
+          "description": "当前页"
+        },
+        "size": {
+          "type": "integer",
+          "description": "每页大小"
+        }
+      }
+    },
+    "AiWorkFlowListRes": {
+      "type": "object",
+      "description": "工作流列表响应",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "工作流ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "工作流名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        },
+        "status": {
+          "type": "integer",
+          "description": "状态"
+        },
+        "createTime": {
+          "type": "string",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "description": "更新时间"
+        }
+      }
+    },
+    "AiWorkFlowDetailRes": {
+      "type": "object",
+      "description": "工作流详情响应",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "工作流ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "工作流名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        },
+        "nodes": {
+          "type": "array",
+          "description": "节点列表",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "AiNodeAddReq": {
+      "type": "object",
+      "description": "节点添加请求",
+      "properties": {
+        "workFlowId": {
+          "type": "integer",
+          "description": "工作流ID"
+        },
+        "nodeId": {
+          "type": "string",
+          "description": "节点ID"
+        },
+        "nodeType": {
+          "type": "string",
+          "description": "节点类型"
+        },
+        "processX": {
+          "type": "string",
+          "description": "X坐标"
+        },
+        "processY": {
+          "type": "string",
+          "description": "Y坐标"
+        },
+        "name": {
+          "type": "string",
+          "description": "节点名称"
+        }
+      }
+    },
+    "AiNodeUpdateReq": {
+      "type": "object",
+      "description": "节点更新请求",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "节点ID"
+        },
+        "workFlowId": {
+          "type": "string",
+          "description": "工作流ID"
+        },
+        "processX": {
+          "type": "string",
+          "description": "X坐标"
+        },
+        "processY": {
+          "type": "string",
+          "description": "Y坐标"
+        }
+      }
+    },
+    "AiNodeConditionSaveReq": {
+      "type": "object",
+      "description": "节点条件保存请求",
+      "properties": {
+        "workFlowId": {
+          "type": "string",
+          "description": "工作流ID"
+        },
+        "code": {
+          "type": "string",
+          "description": "节点ID"
+        },
+        "codeType": {
+          "type": "string",
+          "description": "节点类型"
+        },
+        "name": {
+          "type": "string",
+          "description": "节点名称"
+        },
+        "conditions": {
+          "type": "array",
+          "description": "条件列表",
+          "items": {
+            "type": "object"
+          }
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        }
+      }
+    },
+    "AiNodeConditionObtainReq": {
+      "type": "object",
+      "description": "节点条件查询请求",
+      "properties": {
+        "workFlowId": {
+          "type": "string",
+          "description": "工作流ID"
+        },
+        "nodeId": {
+          "type": "string",
+          "description": "节点ID"
+        }
+      }
+    },
+    "AiNodeRelationNewReq": {
+      "type": "object",
+      "description": "节点关系请求",
+      "properties": {
+        "workFlowId": {
+          "type": "string",
+          "description": "工作流ID"
+        },
+        "parentId": {
+          "type": "string",
+          "description": "父节点ID"
+        },
+        "parentProcessType": {
+          "type": "string",
+          "description": "父节点类型"
+        },
+        "childId": {
+          "type": "string",
+          "description": "子节点ID"
+        },
+        "childProcessType": {
+          "type": "string",
+          "description": "子节点类型"
+        }
+      }
+    },
+    "FlowCopyReq": {
+      "type": "object",
+      "description": "流程复制请求",
+      "properties": {
+        "flowId": {
+          "type": "integer",
+          "description": "流程ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "流程名称"
+        },
+        "parentId": {
+          "type": "integer",
+          "description": "分类ID"
+        },
+        "description": {
+          "type": "string",
+          "description": "流程描述"
+        }
+      }
+    },
+    "FlowCopyRes": {
+      "type": "object",
+      "description": "流程复制响应",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "新流程ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "新流程名称"
+        }
+      }
+    },
+    "AiFlowIntelligenceAgentVo": {
+      "type": "object",
+      "description": "智能体VO",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "智能体ID"
+        },
+        "parentId": {
+          "type": "integer",
+          "description": "父级ID"
+        },
+        "agentType": {
+          "type": "integer",
+          "description": "智能体类型"
+        },
+        "name": {
+          "type": "string",
+          "description": "智能体名称"
+        },
+        "isDefault": {
+          "type": "integer",
+          "description": "是否默认"
+        }
+      }
+    },
+    "AiCopyAndPasteRes": {
+      "type": "object",
+      "description": "复制粘贴响应",
+      "properties": {
+        "nodeIds": {
+          "type": "array",
+          "description": "新节点ID列表",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

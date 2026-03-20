@@ -56,12 +56,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "isOpen",
             "in": "body",
+            "name": "body",
             "description": "是否开启 (0-关闭, 1-开启)",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "isOpen": {
+                  "type": "number",
+                  "description": "是否开启 (0-关闭, 1-开启)"
+                }
+              }
             }
           }
         ],
@@ -85,12 +91,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "name",
             "in": "body",
-            "description": "智能体名称（模糊搜索）",
+            "name": "body",
+            "description": "查询参数",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "智能体名称（模糊搜索）"
+                }
+              }
             }
           }
         ],
@@ -114,12 +126,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "name",
             "in": "body",
-            "description": "智能体名称",
+            "name": "body",
+            "description": "智能体信息",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "智能体名称"
+                }
+              }
             }
           }
         ],
@@ -143,21 +161,22 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "name",
             "in": "body",
-            "description": "新名称",
+            "name": "body",
+            "description": "重命名参数",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "agentId",
-            "in": "body",
-            "description": "智能体ID",
-            "required": true,
-            "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "新名称"
+                },
+                "agentId": {
+                  "type": "number",
+                  "description": "智能体ID"
+                }
+              }
             }
           }
         ],
@@ -181,12 +200,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "agentId",
             "in": "body",
-            "description": "智能体ID",
+            "name": "body",
+            "description": "删除参数",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "agentId": {
+                  "type": "number",
+                  "description": "智能体ID"
+                }
+              }
             }
           }
         ],
@@ -210,12 +235,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "id",
             "in": "body",
-            "description": "分类ID",
+            "name": "body",
+            "description": "查询参数",
             "required": true,
             "schema": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "分类ID"
+                }
+              }
             }
           }
         ],
@@ -268,12 +299,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "查询参数",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                }
+              }
             }
           }
         ],
@@ -297,21 +334,22 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "开关参数",
             "required": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "isOpen",
-            "in": "body",
-            "description": "是否开启 (0-关闭, 1-开启)",
-            "required": true,
-            "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                },
+                "isOpen": {
+                  "type": "number",
+                  "description": "是否开启 (0-关闭, 1-开启)"
+                }
+              }
             }
           }
         ],
@@ -364,21 +402,22 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "置顶参数",
             "required": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "type",
-            "in": "body",
-            "description": "类型 (0-取消置顶, 1-置顶)",
-            "required": true,
-            "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                },
+                "type": {
+                  "type": "number",
+                  "description": "类型 (0-取消置顶, 1-置顶)"
+                }
+              }
             }
           }
         ],
@@ -431,12 +470,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "删除参数",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                }
+              }
             }
           }
         ],
@@ -460,12 +505,18 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "查询参数",
             "required": true,
             "schema": {
-              "type": "number"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                }
+              }
             }
           }
         ],
@@ -518,14 +569,20 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "nodeAddReq",
             "in": "body",
+            "name": "body",
             "description": "节点添加请求列表",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AiNodeAddReq"
+              "type": "object",
+              "properties": {
+                "nodeAddReq": {
+                  "type": "array",
+                  "description": "节点添加请求列表",
+                  "items": {
+                    "$ref": "#/definitions/AiNodeAddReq"
+                  }
+                }
               }
             }
           }
@@ -550,14 +607,20 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "nodeUpdateReq",
             "in": "body",
+            "name": "body",
             "description": "节点更新请求列表",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AiNodeUpdateReq"
+              "type": "object",
+              "properties": {
+                "nodeUpdateReq": {
+                  "type": "array",
+                  "description": "节点更新请求列表",
+                  "items": {
+                    "$ref": "#/definitions/AiNodeUpdateReq"
+                  }
+                }
               }
             }
           }
@@ -611,68 +674,44 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "生成条件节点参数",
             "required": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "nodeId",
-            "in": "body",
-            "description": "节点ID",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "name",
-            "in": "body",
-            "description": "节点名称",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "processX",
-            "in": "body",
-            "description": "X坐标",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "processY",
-            "in": "body",
-            "description": "Y坐标",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "remark",
-            "in": "body",
-            "description": "备注",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions",
-            "in": "body",
-            "description": "子节点名称列表",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                },
+                "nodeId": {
+                  "type": "number",
+                  "description": "节点ID"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "节点名称"
+                },
+                "processX": {
+                  "type": "string",
+                  "description": "X坐标"
+                },
+                "processY": {
+                  "type": "string",
+                  "description": "Y坐标"
+                },
+                "remark": {
+                  "type": "string",
+                  "description": "备注"
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "子节点名称列表",
+                  "items": {
+                    "type": "object"
+                  }
+                }
               }
             }
           }
@@ -697,14 +736,20 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "nodeRelationReq",
             "in": "body",
+            "name": "body",
             "description": "节点关系请求列表",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AiNodeRelationNewReq"
+              "type": "object",
+              "properties": {
+                "nodeRelationReq": {
+                  "type": "array",
+                  "description": "节点关系请求列表",
+                  "items": {
+                    "$ref": "#/definitions/AiNodeRelationNewReq"
+                  }
+                }
               }
             }
           }
@@ -729,14 +774,20 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "nodeRelationReq",
             "in": "body",
+            "name": "body",
             "description": "节点关系请求列表",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/AiNodeRelationNewReq"
+              "type": "object",
+              "properties": {
+                "nodeRelationReq": {
+                  "type": "array",
+                  "description": "节点关系请求列表",
+                  "items": {
+                    "$ref": "#/definitions/AiNodeRelationNewReq"
+                  }
+                }
               }
             }
           }
@@ -761,35 +812,31 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "复制粘贴参数",
             "required": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "nodeAddReq",
-            "in": "body",
-            "description": "节点添加请求列表",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object"
-              }
-            }
-          },
-          {
-            "name": "nodeRelationReq",
-            "in": "body",
-            "description": "节点关系请求列表",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                },
+                "nodeAddReq": {
+                  "type": "array",
+                  "description": "节点添加请求列表",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "nodeRelationReq": {
+                  "type": "array",
+                  "description": "节点关系请求列表",
+                  "items": {
+                    "type": "object"
+                  }
+                }
               }
             }
           }
@@ -814,23 +861,24 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "批量删除参数",
             "required": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "ids",
-            "in": "body",
-            "description": "节点ID列表",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "number"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                },
+                "ids": {
+                  "type": "array",
+                  "description": "节点ID列表",
+                  "items": {
+                    "type": "number"
+                  }
+                }
               }
             }
           }
@@ -902,32 +950,28 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "workFlowId",
             "in": "body",
-            "description": "工作流ID",
+            "name": "body",
+            "description": "校验参数",
             "required": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "nodeId",
-            "in": "body",
-            "description": "节点ID",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "addHxCondition",
-            "in": "body",
-            "description": "添加画像条件列表",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object"
+              "type": "object",
+              "properties": {
+                "workFlowId": {
+                  "type": "number",
+                  "description": "工作流ID"
+                },
+                "nodeId": {
+                  "type": "number",
+                  "description": "节点ID"
+                },
+                "addHxCondition": {
+                  "type": "array",
+                  "description": "添加画像条件列表",
+                  "items": {
+                    "type": "object"
+                  }
+                }
               }
             }
           }
